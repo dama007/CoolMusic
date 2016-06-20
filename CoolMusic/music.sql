@@ -74,11 +74,11 @@ DROP TABLE IF EXISTS `invoice`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invoice` (
   `invoiceNum` int(11) NOT NULL AUTO_INCREMENT,
-  `userID` varchar(8) NOT NULL,
+  `username` varchar(8) NOT NULL,
   `date` datetime NOT NULL,
   PRIMARY KEY (`invoiceNum`),
-  KEY `fk22_idx` (`userID`),
-  CONSTRAINT `fk22` FOREIGN KEY (`userID`) REFERENCES `user` (`userid`) ON UPDATE CASCADE
+  KEY `fk22_idx` (`username`),
+  CONSTRAINT `fk22` FOREIGN KEY (`username`) REFERENCES `user` (`userid`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -181,4 +181,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-20  9:17:47
+-- Dump completed on 2016-06-20  9:24:13
