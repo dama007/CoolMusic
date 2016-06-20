@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `album`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `album` (
   `name` varchar(40) NOT NULL,
-  `date` datetime NOT NULL,
+  `date` int(11) NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -37,7 +37,6 @@ CREATE TABLE `album` (
 
 LOCK TABLES `album` WRITE;
 /*!40000 ALTER TABLE `album` DISABLE KEYS */;
-INSERT INTO `album` VALUES ('Geordie','2001-02-02 00:00:00'),('My All','1997-02-25 00:00:00'),('No Woman No Cry','1979-08-23 00:00:00'),('Titanic BSO','1999-06-15 00:00:00');
 /*!40000 ALTER TABLE `album` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +60,6 @@ CREATE TABLE `artist` (
 
 LOCK TABLES `artist` WRITE;
 /*!40000 ALTER TABLE `artist` DISABLE KEYS */;
-INSERT INTO `artist` VALUES ('Bob Marley','Reggae'),('Celine Dion','Pop'),('Gabry Ponte','Italo Dance'),('Mariah Carey','R & B');
 /*!40000 ALTER TABLE `artist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,12 +71,12 @@ DROP TABLE IF EXISTS `invoice`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invoice` (
-  `invoiceNum` int(11) NOT NULL AUTO_INCREMENT,
+  `invoicenum` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(8) NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`invoiceNum`),
-  KEY `fk22_idx` (`username`),
-  CONSTRAINT `fk22` FOREIGN KEY (`username`) REFERENCES `user` (`userid`) ON UPDATE CASCADE
+  `date` date NOT NULL,
+  PRIMARY KEY (`invoicenum`),
+  KEY `fk1_idx` (`username`),
+  CONSTRAINT `fk1` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -99,10 +97,12 @@ DROP TABLE IF EXISTS `invoicelines`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invoicelines` (
-  `invoiceNum` int(11) NOT NULL,
-  `trackName` varchar(20) NOT NULL,
-  PRIMARY KEY (`invoiceNum`),
-  CONSTRAINT `fk50` FOREIGN KEY (`invoiceNum`) REFERENCES `invoice` (`invoiceNum`) ON UPDATE CASCADE
+  `invoicenum` int(11) NOT NULL,
+  `trackname` varchar(20) NOT NULL,
+  PRIMARY KEY (`invoicenum`,`trackname`),
+  KEY `fk5_idx` (`trackname`),
+  CONSTRAINT `fk5` FOREIGN KEY (`trackname`) REFERENCES `track` (`trackname`) ON UPDATE CASCADE,
+  CONSTRAINT `fk4` FOREIGN KEY (`invoicenum`) REFERENCES `invoice` (`invoicenum`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -123,16 +123,16 @@ DROP TABLE IF EXISTS `track`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `track` (
-  `trackName` varchar(20) NOT NULL,
+  `trackname` varchar(20) NOT NULL,
   `artist` varchar(40) NOT NULL,
   `duration` decimal(3,1) NOT NULL,
   `album` varchar(40) NOT NULL,
   `price` decimal(5,2) NOT NULL,
-  PRIMARY KEY (`trackName`),
-  KEY `fk1_idx` (`artist`),
-  KEY `fk2_idx` (`album`),
-  CONSTRAINT `fk1` FOREIGN KEY (`artist`) REFERENCES `artist` (`singer`) ON UPDATE CASCADE,
-  CONSTRAINT `fk2` FOREIGN KEY (`album`) REFERENCES `album` (`name`) ON UPDATE CASCADE
+  PRIMARY KEY (`trackname`),
+  KEY `fk2_idx` (`artist`),
+  KEY `fk3_idx` (`album`),
+  CONSTRAINT `fk2` FOREIGN KEY (`artist`) REFERENCES `artist` (`singer`) ON UPDATE CASCADE,
+  CONSTRAINT `fk3` FOREIGN KEY (`album`) REFERENCES `album` (`name`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -142,7 +142,6 @@ CREATE TABLE `track` (
 
 LOCK TABLES `track` WRITE;
 /*!40000 ALTER TABLE `track` DISABLE KEYS */;
-INSERT INTO `track` VALUES ('Geordie','Gabry Ponte',3.4,'Geordie',0.49),('My All','Mariah Carey',5.3,'My All',0.99),('My Heart Will Go On','Celine Dion',5.5,'Titanic BSO',0.99),('No Woman No Cry','Bob Marley',4.3,'No Woman No Cry',0.99);
 /*!40000 ALTER TABLE `track` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +167,6 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('1','1','1','1');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -181,4 +179,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-06-20  9:24:13
+-- Dump completed on 2016-06-20 10:05:47
