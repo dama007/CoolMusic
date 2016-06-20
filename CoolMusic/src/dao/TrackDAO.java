@@ -40,15 +40,15 @@ public TrackList selectAlltracks() throws MyException{
                 ResultSet rs = st.executeQuery(query);
                 while (rs.next()) {
                     Track p = new Track();
-                    p.setTrackName(rs.getString("trackName"));
+                    p.setTrackname(rs.getString("trackname"));
                     Artist a = new Artist();
                     a.setSinger(rs.getString("singer"));
                     a.setGenre(rs.getString("genre"));
                     p.setArtist(a);
-                    p.setDuracion(rs.getDouble("duration"));
+                    p.setDuration(rs.getDouble("duration"));
                     Album l = new Album();
                     l.setName(rs.getString("name"));
-                    l.setDate(rs.getDate("date"));
+                    l.setDate(rs.getInt("date"));
                     p.setAlbum(l);
                     p.setPrice(rs.getDouble("price"));
                     trackList.insertTrack(p);

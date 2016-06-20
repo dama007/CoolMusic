@@ -2,6 +2,7 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
+    <Property name="closable" type="boolean" value="true"/>
     <Property name="title" type="java.lang.String" value="All Tracks"/>
   </Properties>
   <SyntheticProperties>
@@ -23,7 +24,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jScrollPane1" pref="651" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="646" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
           </Group>
@@ -61,16 +62,16 @@
           </Properties>
           <BindingProperties>
             <BindingProperty name="elements" source="Form" sourcePath="${tlist.list}" target="jTable1" targetPath="elements" updateStrategy="0" immediately="true">
-              <Subbinding sourcePath="${trackName}">
+              <Subbinding sourcePath="${trackname}">
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
-              </Subbinding>
-              <Subbinding sourcePath="${album}">
-                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="model.Album.class"/>
               </Subbinding>
               <Subbinding sourcePath="${artist}">
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="model.Artist.class"/>
               </Subbinding>
-              <Subbinding sourcePath="${duracion}">
+              <Subbinding sourcePath="${album}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="model.Album.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${duration}">
                 <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Double.class"/>
               </Subbinding>
               <Subbinding sourcePath="${price}">
@@ -83,7 +84,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Buy Selected"/>
+        <Property name="text" type="java.lang.String" value="Add to my cart"/>
       </Properties>
     </Component>
   </SubComponents>

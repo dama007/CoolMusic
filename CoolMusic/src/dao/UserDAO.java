@@ -23,6 +23,23 @@ import model.User;
 public class UserDAO {
 
     private Connection conexion;
+    
+     public void updatePassword (User user) throws MyException{
+       
+        conectar();
+        try {            
+            String update = "update user set password=? where username=?;";
+            PreparedStatement ps = conexion.prepareStatement(update);
+            ps.setString(1, user.getPassword());
+            ps.setString(2, user.getUsername());
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            throw new MyException("Error al actualizar password: "+ex.getLocalizedMessage());
+        } finally{
+        desconectar();
+        }   
+    }
 
     public void updateUser (User user) throws MyException{
        

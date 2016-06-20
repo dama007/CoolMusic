@@ -17,21 +17,21 @@ import java.util.Date;
 public class Album {
 
     private String name;
-    private Date dateA;
+    private int dateA;
 
     public static final String PROP_DATE = "date";
 
     public Album() {
         name = "";
-        dateA = new Date();
+        
     }
 
-    public Date getDate() {
+    public int getDate() {
         return dateA;
     }
 
-    public void setDate(Date date) {
-        Date oldDate = this.dateA;
+    public void setDate(int date) {
+        int oldDate = this.dateA;
         this.dateA = date;
         propertyChangeSupport.firePropertyChange(PROP_DATE, oldDate, date);
     }

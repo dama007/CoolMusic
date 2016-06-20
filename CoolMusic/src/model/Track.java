@@ -14,15 +14,15 @@ import java.beans.PropertyChangeSupport;
  */
 public class Track {
 
-    private String trackName;
+    private String trackname;
     private Artist artist;
     private Album album;
-    private double duracion;
+    private double duration;
     private double price;
 
     public Track() {
 
-        trackName = "";
+        trackname = "";
         artist = new Artist();
         album = new Album();
     }
@@ -39,16 +39,16 @@ public class Track {
         propertyChangeSupport.firePropertyChange(PROP_PRICE, oldPrice, price);
     }
 
-    public static final String PROP_DURACION = "duracion";
+    public static final String PROP_DURATION = "duration";
 
-    public double getDuracion() {
-        return duracion;
+    public double getDuration() {
+        return duration;
     }
 
-    public void setDuracion(double duracion) {
-        double oldDuracion = this.duracion;
-        this.duracion = duracion;
-        propertyChangeSupport.firePropertyChange(PROP_DURACION, oldDuracion, duracion);
+    public void setDuration(double duration) {
+        double oldDuration = this.duration;
+        this.duration = duration;
+        propertyChangeSupport.firePropertyChange(PROP_DURATION, oldDuration, duration);
     }
 
     public static final String PROP_ALBUM = "album";
@@ -75,16 +75,16 @@ public class Track {
         propertyChangeSupport.firePropertyChange(PROP_ARTIST, oldArtist, artist);
     }
 
-    public static final String PROP_TRACKNAME = "trackName";
+    public static final String PROP_TRACKNAME = "trackname";
 
-    public String getTrackName() {
-        return trackName;
+    public String getTrackname() {
+        return trackname;
     }
 
-    public void setTrackName(String trackName) {
-        String oldTrackName = this.trackName;
-        this.trackName = trackName;
-        propertyChangeSupport.firePropertyChange(PROP_TRACKNAME, oldTrackName, trackName);
+    public void setTrackname(String trackname) {
+        String oldTrackname = this.trackname;
+        this.trackname = trackname;
+        propertyChangeSupport.firePropertyChange(PROP_TRACKNAME, oldTrackname, trackname);
     }
 
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
