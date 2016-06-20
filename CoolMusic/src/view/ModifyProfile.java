@@ -132,7 +132,6 @@ dispose();
             JOptionPane.showMessageDialog(this, "Datos Modificados");
             dispose();
             } catch (MyException ex){
-            
             JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR: Datos no actualizados", JOptionPane.ERROR_MESSAGE);
             }
         }

@@ -7,9 +7,11 @@ package view;
 
 import static coolmusic.CoolMusic.trackdao;
 import exception.MyException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Track;
 import model.TrackList;
 
 /**
@@ -18,8 +20,27 @@ import model.TrackList;
  */
 public class TrackListView extends javax.swing.JInternalFrame {
 
-    
-        private TrackList tlist;
+    private TrackList tlist;
+
+    private ArrayList<TrackList> selectedTracks;
+
+    private Track selectedSong;
+
+    public Track getSelectedSong() {
+        return selectedSong;
+    }
+
+    public void setSelectedSong(Track selectedSong) {
+        this.selectedSong = selectedSong;
+    }
+
+    public ArrayList<TrackList> getSelectedTracks() {
+        return selectedTracks;
+    }
+
+    public void setSelectedTracks(ArrayList<TrackList> selectedTracks) {
+        this.selectedTracks = selectedTracks;
+    }
 
     public TrackList getTlist() {
         return tlist;
@@ -29,16 +50,20 @@ public class TrackListView extends javax.swing.JInternalFrame {
         this.tlist = tlist;
     }
 
-    
-    public TrackListView() {
-        
-            try {
-                tlist = trackdao.selectAlltracks();
-            } catch (MyException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-            }
+    private TrackList shoppingList;
+
+    public TrackListView(TrackList shoppingList) {
+        // Lista de canciones que el usuario va comprando
+        this.shoppingList = shoppingList;
+        try {
+            tlist = trackdao.selectAlltracks();
+        } catch (MyException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        selectedTracks = new ArrayList<>();
+        selectedSong = new Track();
         initComponents();
-        
+
     }
 
     /**
@@ -92,6 +117,11 @@ public class TrackListView extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Add to my cart");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,6 +145,24 @@ public class TrackListView extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+if (jTable1.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un jugador",
+                    "ERROR: Jugador no seleccionado", JOptionPane.ERROR_MESSAGE);
+        } else if (jTable1.getSelectedRowCount() == 1) {
+            // Ha seleccionado sólo 1 canción
+             //la añadimos a la lista de la compra
+            shoppingList.insertTrack(selectedSong);
+//        } else {
+//            // Ha seleccionado más de 1 jugador
+//            for (Jugador j : jugadoresSeleccionados) {
+//                // Borramos todos los jugadores seleccionados de la
+//                // lista de jugadores del equipo
+//                equipo.getJugadores().bajaJugador(j);
+//            }
+//        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
