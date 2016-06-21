@@ -12,7 +12,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import model.Album;
+import model.Artist;
 import model.Invoice;
+import model.InvoiceList;
 import model.Track;
 import model.TrackList;
 import model.User;
@@ -25,6 +28,76 @@ public class InvoiceDAO {
 
     private Connection conexion;
 
+    
+    
+    public InvoiceList selectAllInvoices(User user) throws MyException{
+        InvoiceList invoiceList = new InvoiceList();
+        conectar();
+        if(conexion != null){
+            try {                             
+                String query = "select invoice.invoicenum, invoice.date from invoice join invoicelines on invoice.invoicenum = invoicelines.invoicenum where '" + user.getUsername() + "' group by invoice.invoicenum;";
+                Statement st;
+                st = conexion.createStatement();
+                ResultSet rs = st.executeQuery(query);
+                while (rs.next()) {
+                    Invoice in = new Invoice();
+                    in.setInvoiceNum(rs.getInt("invoicenum"));
+                    in.setDate(rs.getDate("date"));                   
+                    invoiceList.insertInvoice(in);
+                }
+            } catch (SQLException ex) {
+                throw new MyException("Error al actualizar datos: "+ex.getLocalizedMessage());
+              } finally {
+                desconectar();
+            }
+        }
+        return invoiceList;
+    }
+    
+    
+    public void updateUser (User user) throws MyException{
+       
+        conectar();
+        try {            
+            String update = "update user set name=?, surname=? where username=?;";
+            PreparedStatement ps = conexion.prepareStatement(update);
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getSurname());
+            ps.setString(3, user.getUsername());
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            throw new MyException("Error al actualizar datos: "+ex.getLocalizedMessage());
+        } finally{
+        desconectar();
+        }   
+    }
+    
+    
+     public User getUserByUsername(String username) throws MyException {
+        conectar();
+        try {
+            String query = "select * from user where username='" + username + "';";
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            User user = new User();
+            if (rs.next()) {
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setName(rs.getString("name"));
+                user.setSurname(rs.getString("surname"));
+            }
+            rs.close();
+            st.close();
+            return user;
+        } catch (SQLException ex) {
+            throw new MyException("Error al consultar" + ex.getLocalizedMessage());
+        } finally {
+            desconectar();
+        }
+    }
+    
+    
     public void addFraComplete(Invoice invoice) throws MyException {
         // insertamos en la tabla invoice 
         insertInvoice(invoice);

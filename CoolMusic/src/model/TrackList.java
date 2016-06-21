@@ -57,8 +57,7 @@ public class TrackList {
     
     public double totalPrice(){
     double total = 0;
-    for (Track t : list){
-        
+    for (Track t : list){        
         total += t.getPrice();
     }
     return total;

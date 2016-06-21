@@ -236,15 +236,17 @@ public class MyShoppingCart extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Invoice i = new Invoice();
         i.setClient(us);
-        System.out.println(us.getUsername());
-        System.out.println(i.getClient().getUsername());
         i.setInvoiceTracks(userTrackList);
         InvoiceDAO invoiceDAO = new InvoiceDAO();
         try {
             invoiceDAO.addFraComplete(i);
+            JOptionPane.showMessageDialog(this, "La compra se ha realizado satisfactoriamente",
+                    "Confirmación", JOptionPane.PLAIN_MESSAGE);
         } catch (MyException ex) {
             Logger.getLogger(MyShoppingCart.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

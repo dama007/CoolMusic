@@ -60,7 +60,6 @@ public class UserDAO {
     }
     
     public User getUserByUsername(String username) throws MyException {
-
         conectar();
         try {
             String query = "select * from user where username='" + username + "';";
