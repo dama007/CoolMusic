@@ -30,13 +30,12 @@ public class MainView extends javax.swing.JFrame {
         UserDAO userDAO = new UserDAO();
         try {  
             currentUser = userDAO.getUserByUsername(username);
+            System.out.println(username);
             } catch (MyException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
             dispose();
         }
-        
- 
-        
+       
         shoppingList = new TrackList();
         initComponents();
         
@@ -77,9 +76,9 @@ public class MainView extends javax.swing.JFrame {
             .addGap(0, 618, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Perfil");
+        jMenu1.setText("Profile");
 
-        jMenuItem1.setText("Modificar Perfil");
+        jMenuItem1.setText("Modify Profile");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -87,7 +86,7 @@ public class MainView extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setText("Modificar Contraseña");
+        jMenuItem2.setText("Modify Password");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);
@@ -110,7 +109,7 @@ public class MainView extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Espacio de: "+currentUser.getName());
+        jMenu3.setText("Shopping Area");
 
         jMenuItem4.setText("My Shopping Cart");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -144,7 +143,7 @@ public class MainView extends javax.swing.JFrame {
         ModifyProfile modifyProfile = new ModifyProfile(this,true,currentUser);
         modifyProfile.setLocationRelativeTo(null);
         modifyProfile.setVisible(true);
-        this.setTitle("Ärea personal de "+currentUser.getName());
+        this.setTitle("Personal Area"+currentUser.getName());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -161,7 +160,10 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
+        MyShoppingCart myShoppingCart = new MyShoppingCart(shoppingList, currentUser);   
+        myShoppingCart.setSize(jDesktopPane1.getWidth(), jDesktopPane1.getHeight());
+        jDesktopPane1.add(myShoppingCart);
+        myShoppingCart.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**

@@ -7,6 +7,7 @@ package model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Objects;
 
 /**
  *
@@ -87,6 +88,30 @@ public class Track {
         propertyChangeSupport.firePropertyChange(PROP_TRACKNAME, oldTrackname, trackname);
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + Objects.hashCode(this.trackname);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Track other = (Track) obj;
+        if (!Objects.equals(this.trackname, other.trackname)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

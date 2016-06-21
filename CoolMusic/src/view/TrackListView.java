@@ -22,7 +22,7 @@ public class TrackListView extends javax.swing.JInternalFrame {
 
     private TrackList tlist;
 
-    private ArrayList<TrackList> selectedTracks;
+    private ArrayList<Track> selectedTracks;
 
     private Track selectedSong;
 
@@ -34,11 +34,11 @@ public class TrackListView extends javax.swing.JInternalFrame {
         this.selectedSong = selectedSong;
     }
 
-    public ArrayList<TrackList> getSelectedTracks() {
+    public ArrayList<Track> getSelectedTracks() {
         return selectedTracks;
     }
 
-    public void setSelectedTracks(ArrayList<TrackList> selectedTracks) {
+    public void setSelectedTracks(ArrayList<Track> selectedTracks) {
         this.selectedTracks = selectedTracks;
     }
 
@@ -113,10 +113,14 @@ public class TrackListView extends javax.swing.JInternalFrame {
         columnBinding.setColumnName("Price");
         columnBinding.setColumnClass(Double.class);
         bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
+        jTableBinding.bind();org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${selectedSong}"), jTable1, org.jdesktop.beansbinding.BeanProperty.create("selectedElement"));
+        bindingGroup.addBinding(binding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${selectedTracks}"), jTable1, org.jdesktop.beansbinding.BeanProperty.create("selectedElements"));
+        bindingGroup.addBinding(binding);
+
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Add to my cart");
+        jButton1.setText("Add To My Cart");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -128,7 +132,7 @@ public class TrackListView extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1))
         );
@@ -147,21 +151,30 @@ public class TrackListView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-if (jTable1.getSelectedRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Debes seleccionar un jugador",
-                    "ERROR: Jugador no seleccionado", JOptionPane.ERROR_MESSAGE);
+        if (jTable1.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar una canción",
+                    "ERROR: Canción no seleccionada", JOptionPane.ERROR_MESSAGE);
         } else if (jTable1.getSelectedRowCount() == 1) {
-            // Ha seleccionado sólo 1 canción
-             //la añadimos a la lista de la compra
             shoppingList.insertTrack(selectedSong);
-//        } else {
-//            // Ha seleccionado más de 1 jugador
-//            for (Jugador j : jugadoresSeleccionados) {
-//                // Borramos todos los jugadores seleccionados de la
-//                // lista de jugadores del equipo
-//                equipo.getJugadores().bajaJugador(j);
-//            }
-//        }
+            JOptionPane.showMessageDialog(this, "Se ha añadido una canción",
+                    "Canción añadida", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            boolean inserted = false;
+            for (Track t : selectedTracks) {
+                if (!shoppingList.existTrack(t)) {
+                    shoppingList.insertTrack(t);
+                    inserted = true;
+                }
+            }
+            if (inserted) {
+                JOptionPane.showMessageDialog(this, "Se han añadido las canciones seleccionadas",
+                        "Canciones añadidas", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Ya habias añadido las canciones seleccionadas previamente",
+                        "Canciones Duplicadas", JOptionPane.WARNING_MESSAGE);
+            }
+            dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

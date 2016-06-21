@@ -37,6 +37,36 @@ public class TrackList {
         list.remove(t);
     }
     
+    public boolean existTrack(Track t){
+     
+     if (list.contains(t)){
+     return true;
+     }else
+     return false;
+    }
+    
+    
+    public int totalTracks(){
+    int total = 0;
+    for (Track t : list){
+        total++; 
+    }
+    return total;
+    }
+
+    
+    public double totalPrice(){
+    double total = 0;
+    for (Track t : list){
+        
+        total += t.getPrice();
+    }
+    return total;
+    }
+    
+    
+    
+    
     public void setList(ObservableList<Track> list) {
         ObservableList<Track> oldList = this.list;
         this.list = list;

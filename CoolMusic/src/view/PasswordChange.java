@@ -59,7 +59,7 @@ public class PasswordChange extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar Contraseña");
 
-        jLabel1.setText("Contraseña actual:");
+        jLabel1.setText("Current Password:");
 
         jPasswordField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -72,7 +72,7 @@ public class PasswordChange extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("Nueva contraseña (max 10):");
+        jLabel2.setText("New Password (max 10 characters):");
 
         jPasswordField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,16 +80,16 @@ public class PasswordChange extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setText("Confirmar contraseña:");
+        jLabel3.setText("Confirm New Password:");
 
-        jButton1.setText("Aceptar");
+        jButton1.setText("Accept");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Cancelar");
+        jButton2.setText("Cancel");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -104,7 +104,7 @@ public class PasswordChange extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -162,7 +162,7 @@ public class PasswordChange extends javax.swing.JDialog {
             
             try {
                 userDao.updatePassword(newUser);
-                 JOptionPane.showMessageDialog(this, "La nueva contraseña ha sido modificada","Contraseña modificada", JOptionPane.INFORMATION_MESSAGE);
+                 JOptionPane.showMessageDialog(this, "La contraseña ha sido modificada","Contraseña modificada", JOptionPane.INFORMATION_MESSAGE);
             } catch (MyException ex) {             
                 JOptionPane.showMessageDialog(this, "La contraseña no ha sido modificada"+ex.getLocalizedMessage(),"ERROR", JOptionPane.ERROR_MESSAGE);
             }

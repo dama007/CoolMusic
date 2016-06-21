@@ -12,17 +12,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.User;
 
 /**
  *
  * @author usu21
  */
-public class UserDAO {
-
-    private Connection conexion;
+public class InvoiceLinesDAO {
+    
+ private Connection conexion;
     
      public void updatePassword (User user) throws MyException{
        
@@ -108,9 +106,8 @@ public class UserDAO {
     }
 
     public void insertUser(User user) throws MyException {
-        
-        conectar();
         try {
+            conectar();
             String insert = "insert into user values (?,?,?,?)";
             PreparedStatement ps = conexion.prepareStatement(insert);
             ps.setString(1, user.getUsername());
@@ -122,7 +119,9 @@ public class UserDAO {
         } catch (SQLException ex) {
             throw new MyException("Error al insertar " + ex.getLocalizedMessage());
         } finally {
+
             desconectar();
+
         }
 
     }

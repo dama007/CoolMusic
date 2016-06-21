@@ -18,11 +18,27 @@ public class Invoice {
 
     private int invoiceNum;
     private Date dateI;
-    private User client;
+    private User client;   
+    private TrackList invoiceTracks;
 
+    public static final String PROP_INVOICETRACKS = "invoiceTracks";
+
+    public TrackList getInvoiceTracks() {
+        return invoiceTracks;
+    }
+
+    public void setInvoiceTracks(TrackList invoiceTracks) {
+        TrackList oldInvoiceTracks = this.invoiceTracks;
+        this.invoiceTracks = invoiceTracks;
+        propertyChangeSupport.firePropertyChange(PROP_INVOICETRACKS, oldInvoiceTracks, invoiceTracks);
+    }
+
+    
+    
     public Invoice() {
         client = new User();
         dateI = new Date();
+        invoiceTracks = new TrackList();
     }
 
     public static final String PROP_CLIENT = "client";
