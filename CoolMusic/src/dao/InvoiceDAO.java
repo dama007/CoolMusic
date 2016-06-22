@@ -30,15 +30,41 @@ public class InvoiceDAO {
 
     
     
-    public InvoiceList selectAllInvoices(User user) throws MyException{
+//    public InvoiceList selectAllInvoices(User user) throws MyException{
+//        InvoiceList invoiceList = new InvoiceList();
+//        conectar();
+//        if(conexion != null){
+//            try {                             
+//                String query = "select invoice.invoicenum, invoice.date from invoice join invoicelines on invoice.invoicenum = invoicelines.invoicenum where '" + user.getUsername() + "' group by invoice.invoicenum;";
+//                Statement st;
+//                st = conexion.createStatement();
+//                ResultSet rs = st.executeQuery(query);
+//                while (rs.next()) {
+//                    Invoice in = new Invoice();
+//                    in.setInvoiceNum(rs.getInt("invoicenum"));
+//                    in.setDate(rs.getDate("date"));                   
+//                    invoiceList.insertInvoice(in);
+//                }
+//            } catch (SQLException ex) {
+//                throw new MyException("Error al actualizar datos: "+ex.getLocalizedMessage());
+//              } finally {
+//                desconectar();
+//            }
+//        }
+//        return invoiceList;
+//    }
+    
+    
+       public InvoiceList selectAllInvoices2(String username) throws MyException{
         InvoiceList invoiceList = new InvoiceList();
         conectar();
         if(conexion != null){
             try {                             
-                String query = "select invoice.invoicenum, invoice.date from invoice join invoicelines on invoice.invoicenum = invoicelines.invoicenum where '" + user.getUsername() + "' group by invoice.invoicenum;";
-                Statement st;
-                st = conexion.createStatement();
-                ResultSet rs = st.executeQuery(query);
+                String query = "select invoice.invoicenum, invoice.date from invoice join invoicelines on invoice.invoicenum = invoicelines.invoicenum where username=? group by invoice.invoicenum;";
+                PreparedStatement ps;
+                ps = conexion.prepareStatement(query);
+                ps.setString(1, username);
+                ResultSet rs = ps.executeQuery(query);
                 while (rs.next()) {
                     Invoice in = new Invoice();
                     in.setInvoiceNum(rs.getInt("invoicenum"));
@@ -52,6 +78,30 @@ public class InvoiceDAO {
             }
         }
         return invoiceList;
+    }
+    
+       public boolean validateUser(String username, String password) throws MyException {
+
+        conectar();
+        try {
+            String query = "select username, password from user where username=? and password=?;";
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+            boolean found = false;
+            if (rs.next()) {
+                found = true;
+                return true;
+            }
+            rs.close();
+            ps.close();
+            return found;
+        } catch (SQLException ex) {
+            throw new MyException("Error al validad: " + ex.getLocalizedMessage());
+        } finally {
+            desconectar();
+        }
     }
     
     

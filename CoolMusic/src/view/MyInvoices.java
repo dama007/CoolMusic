@@ -36,17 +36,18 @@ public class MyInvoices extends javax.swing.JInternalFrame {
     private User us;
     
     public MyInvoices(User user) {
-//        us = user;
-//
-//            try {
-//                
-//// PREGUNTAR A MAR                
-//                
-//                ilist = InvoiceDAO.selectAllInvoices(us);
-//            } catch (MyException ex) {
-//                Logger.getLogger(MyInvoices.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        initComponents();
+        us = user;
+        String a=us.getUsername();
+
+            try {
+                
+// PREGUNTAR A MAR                
+                InvoiceDAO invoiceDAO = new InvoiceDAO();
+                ilist = invoiceDAO.selectAllInvoices2(a);
+            } catch (MyException ex) {
+                Logger.getLogger(MyInvoices.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        initComponents();
     }
 
     /**
@@ -57,6 +58,7 @@ public class MyInvoices extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -76,6 +78,23 @@ public class MyInvoices extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${ilist.list}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, jTable1);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${client}"));
+        columnBinding.setColumnName("Client");
+        columnBinding.setColumnClass(model.User.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${date}"));
+        columnBinding.setColumnName("Date");
+        columnBinding.setColumnClass(java.util.Date.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${invoiceNum}"));
+        columnBinding.setColumnName("Invoice Num");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${invoiceTracks}"));
+        columnBinding.setColumnName("Invoice Tracks");
+        columnBinding.setColumnClass(model.TrackList.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Details");
@@ -99,6 +118,8 @@ public class MyInvoices extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -107,5 +128,6 @@ public class MyInvoices extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
